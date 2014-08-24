@@ -1,2 +1,2 @@
 all:
-	sudo docker build -t rokkie/apache .
+	docker build -t rokkie/apache .
