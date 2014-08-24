@@ -23,7 +23,7 @@ RUN apt-get update && \
 		ServerName localhost" /etc/apache2/apache2.conf
 
 # Add supervisor configuration that starts apache
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD supervisor.conf /etc/supervisor/conf.d/apache.conf
 
 # Overwrite default index file 
 ADD index.html /var/www/html/index.html
@@ -32,4 +32,4 @@ ADD index.html /var/www/html/index.html
 EXPOSE 80
 
 # Start supervisor with provides configuration
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
