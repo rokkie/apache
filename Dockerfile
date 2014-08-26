@@ -12,18 +12,17 @@ RUN apt-get update && \
 	apt-get upgrade -y && \
 	apt-get install -y \
 		nano \
-		apache2 \
-		supervisor && \
+		apache2 && \
 	mkdir -p \
 		/var/lock/apache2 \
-		/var/run/apache2 \
-		/var/log/supervisor && \
+		/var/run/apache2 && \
 	rm -rf /var/lib/apt/lists/* && \
 	sed -i "N;$!/Global configuration\n#/a \
 		ServerName localhost" /etc/apache2/apache2.conf
 
-# Add supervisor configuration that starts apache
-ADD supervisor.conf /etc/supervisor/conf.d/apache.conf
+# Add script that starts the server
+ADD run.sh /bin/run.sh
+RUN chmod +x /bin/run.sh
 
 # Overwrite default index file 
 ADD index.html /var/www/html/index.html
@@ -31,5 +30,5 @@ ADD index.html /var/www/html/index.html
 # Expose port 80 for web traffic
 EXPOSE 80
 
-# Start supervisor with provides configuration
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+# Execute script to start mysql server
+CMD ["run.sh"]
